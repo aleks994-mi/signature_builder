@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UNILINE Professional Email Signature Builder</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Arial, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #1976d2, #d32f2f);
+        color: white;
+        padding: 25px 0;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .header h1 {
+        font-size: 2.8em;
+        font-weight: 700;
+        margin-bottom: 8px;
+        letter-spacing: -0.02em;
+      }
+
+      .header p {
+        font-size: 1.2em;
+        opacity: 0.95;
+        font-weight: 300;
+      }
+
+      .container {
+        display: flex;
+        gap: 30px;
+        padding: 30px;
+        max-width: 1600px;
+        margin: 0 auto;
+        min-height: calc(100vh - 140px);
+      }
+
+      .form-panel {
+        flex: 1;
+        background: white;
+        border-radius: 15px;
+        padding: 35px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        height: fit-content;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .preview-panel {
+        flex: 1.2;
+        background: white;
+        border-radius: 15px;
+        padding: 35px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        height: fit-content;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .section {
+        margin-bottom: 30px;
+      }
+
+      .section h3 {
+        color: #1976d2;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e2e8f0;
+        font-size: 1.3em;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .section h3 i {
+        color: #d32f2f;
+        font-size: 1.1em;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #374151;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="url"],
+      textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background: #ffffff;
+        font-family: inherit;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #1976d2;
+        box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .color-input {
+        width: 70px;
+        height: 45px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .color-input:hover {
+        border-color: #1976d2;
+        transform: scale(1.05);
+      }
+
+      .row {
+        display: flex;
+        gap: 20px;
+      }
+
+      .row .form-group {
+        flex: 1;
+      }
+
+      .logo-section {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border: 2px dashed #6c757d;
+        border-radius: 12px;
+        padding: 25px;
+        text-align: center;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .logo-section:hover {
+        border-color: #1976d2;
+        background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+      }
+
+      .logo-section h4 {
+        color: #495057;
+        margin-bottom: 15px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .logo-preview {
+        width: 250px;
+        height: 187px;
+        margin: 15px auto;
+        background: #f8f9fa;
+        border: 2px dashed #dee2e6;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: #6c757d;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .preview-area {
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 30px;
+        background: #f8fafc;
+        margin-bottom: 25px;
+        min-height: 400px;
+      }
+
+      .signature-preview {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+        font-family: Arial, sans-serif;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #1976d2, #1565c0);
+        color: white;
+        box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(25, 118, 210, 0.4);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #d32f2f, #c62828);
+        color: white;
+        box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+      }
+
+      .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(211, 47, 47, 0.4);
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #4caf50, #388e3c);
+        color: white;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+      }
+
+      .success-message {
+        background: linear-gradient(135deg, #4caf50, #388e3c);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-top: 15px;
+        display: none;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      }
+
+      .preview-title {
+        color: #1976d2;
+        margin-bottom: 20px;
+        font-size: 1.4em;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .preview-title i {
+        color: #d32f2f;
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .checkbox-group input[type="checkbox"] {
+        width: auto;
+        margin: 0;
+      }
+
+      .checkbox-group label {
+        margin: 0;
+        text-transform: none;
+        font-weight: 400;
+        color: #555;
+        cursor: pointer;
+      }
+
+      @media (max-width: 1200px) {
+        .container {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .preview-panel {
+          flex: 1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px;
+        }
+
+        .form-panel,
+        .preview-panel {
+          padding: 25px;
+        }
+
+        .row {
+          flex-direction: column;
+          gap: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Uniline Inc Professional Email Signature Builder</h1>
+      <p>Create stunning email signatures with live preview and instant copy</p>
+    </div>
+
+    <div class="container">
+      <!-- Form Panel -->
+      <div class="form-panel">
+        <div class="section">
+          <h3><i class="fas fa-image"></i>Logo & Branding</h3>
+          <div class="logo-section">
+            <h4>Uniline Inc Logo with Animation</h4>
+            <div class="form-group">
+              <label for="logoUrl">Logo/Animation URL</label>
+              <input
+                type="url"
+                id="logoUrl"
+                value="https://i.imgur.com/JbJRuDN.gif"
+                placeholder="https://example.com/your-logo.gif"
+                onchange="updatePreview()"
+              />
+            </div>
+            <div class="logo-preview" id="logoPreview">
+              <div style="text-align: center; line-height: 1.3">
+                <strong>UNILINE</strong><br />
+                <div
+                  style="
+                    width: 60px;
+                    height: 2px;
+                    background: #d32f2f;
+                    margin: 5px auto;
+                  "
+                ></div>
+                <em>INC.</em><br />
+                <small style="color: #999; margin-top: 10px; display: block"
+                  >+ Uniline Inc Logo</small
+                >
+              </div>
+            </div>
+            <p style="font-size: 12px; color: #6c757d; margin-top: 10px">
+              Upload your logo/animation image. Recommended size: 250×187px
+            </p>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><i class="fas fa-user"></i>Personal Information</h3>
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              value=""
+              onchange="updatePreview()"
+            />
+          </div>
+          <div class="form-group">
+            <label for="jobTitle">Job Title</label>
+            <input
+              type="text"
+              id="jobTitle"
+              value=""
+              onchange="updatePreview()"
+            />
+          </div>
+          <div class="form-group">
+            <label for="department">Department</label>
+            <input
+              type="text"
+              id="department"
+              value=""
+              onchange="updatePreview()"
+            />
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><i class="fas fa-phone"></i>Contact Information</h3>
+          <div class="row">
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input
+                type="tel"
+                id="phone"
+                value="(563) 514-4399"
+                onchange="updatePreview()"
+              />
+            </div>
+            <div class="form-group">
+              <label for="fax">Fax</label>
+              <input type="tel" id="fax" value="" onchange="updatePreview()" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Company Contact Email</label>
+            <input
+              type="email"
+              id="email"
+              value="operations@unilineinc.net"
+              onchange="updatePreview()"
+            />
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><i class="fas fa-map-marker-alt"></i>Addresses</h3>
+          <div class="form-group">
+            <label for="address1">Primary Address</label>
+            <input
+              type="text"
+              id="address1"
+              value="7667 W 95th Street STE 209, Hickory Hills, IL, 60457"
+              onchange="updatePreview()"
+            />
+          </div>
+          <div class="form-group">
+            <label for="address2">Secondary Address</label>
+            <input
+              type="text"
+              id="address2"
+              value=""
+              onchange="updatePreview()"
+            />
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><i class="fas fa-certificate"></i>Licensing</h3>
+          <div class="row">
+            <div class="form-group">
+              <label for="mcNumber">MC Number</label>
+              <input
+                type="text"
+                id="mcNumber"
+                value="MC 1192402"
+                onchange="updatePreview()"
+              />
+            </div>
+            <div class="form-group">
+              <label for="dotNumber">DOT Number</label>
+              <input
+                type="text"
+                id="dotNumber"
+                value="DOT 3555706"
+                onchange="updatePreview()"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><i class="fas fa-share-alt"></i>Social Media & Website</h3>
+          <div class="form-group">
+            <label for="website">Website URL</label>
+            <input
+              type="url"
+              id="website"
+              value="https://www.unilineinc.net/"
+              onchange="updatePreview()"
+            />
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="facebook">Facebook URL</label>
+              <input
+                type="url"
+                id="facebook"
+                value=""
+                onchange="updatePreview()"
+              />
+            </div>
+            <div class="form-group">
+              <label for="instagram">Instagram URL</label>
+              <input
+                type="url"
+                id="instagram"
+                value="https://www.instagram.com/unilineinc/"
+                onchange="updatePreview()"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="linkedin">LinkedIn URL</label>
+            <input
+              type="url"
+              id="linkedin"
+              value=""
+              placeholder="e.g., https://www.linkedin.com/company/unilineinc"
+              onchange="updatePreview()"
+            />
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><i class="fas fa-palette"></i>Styling</h3>
+          <div class="row">
+            <div class="form-group">
+              <label for="primaryColor">Primary Color (Blue)</label>
+              <input
+                type="color"
+                id="primaryColor"
+                value="#1976d2"
+                class="color-input"
+                onchange="updatePreview()"
+              />
+            </div>
+            <div class="form-group">
+              <label for="accentColor">Accent Color (Red)</label>
+              <input
+                type="color"
+                id="accentColor"
+                value="#d32f2f"
+                class="color-input"
+                onchange="updatePreview()"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><i class="fas fa-cogs"></i>Options</h3>
+          <div class="checkbox-group">
+            <input
+              type="checkbox"
+              id="includeDisclaimer"
+              checked
+              onchange="updatePreview()"
+            />
+            <label for="includeDisclaimer"
+              >Include email disclaimer and confidentiality notice</label
+            >
+          </div>
+          <div class="checkbox-group">
+            <input
+              type="checkbox"
+              id="includeDomainWarning"
+              checked
+              onchange="updatePreview()"
+            />
+            <label for="includeDomainWarning"
+              >Include domain verification warning</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Panel -->
+      <div class="preview-panel">
+        <h3 class="preview-title"><i class="fas fa-eye"></i>Live Preview</h3>
+        <div class="preview-area">
+          <div class="signature-preview" id="signaturePreview">
+            <!-- Signature will be generated here -->
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary" onclick="copySignature()">
+            <i class="fas fa-copy"></i>Copy HTML Code
+          </button>
+          <button class="btn btn-secondary" onclick="downloadSignature()">
+            <i class="fas fa-download"></i>Download HTML
+          </button>
+          <button class="btn btn-success" onclick="previewInNewWindow()">
+            <i class="fas fa-external-link-alt"></i>Preview in New Window
+          </button>
+        </div>
+
+        <div class="success-message" id="successMessage">
+          <i class="fas fa-check-circle"></i> Signature HTML copied to clipboard
+          successfully!
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        updatePreview();
+      });
+
+      // Get all input elements
+      const inputs = {
+        fullName: document.getElementById("fullName"),
+        jobTitle: document.getElementById("jobTitle"),
+        department: document.getElementById("department"),
+        phone: document.getElementById("phone"),
+        fax: document.getElementById("fax"),
+        email: document.getElementById("email"),
+        address1: document.getElementById("address1"),
+        address2: document.getElementById("address2"),
+        mcNumber: document.getElementById("mcNumber"),
+        dotNumber: document.getElementById("dotNumber"),
+        website: document.getElementById("website"),
+        facebook: document.getElementById("facebook"),
+        instagram: document.getElementById("instagram"),
+        linkedin: document.getElementById("linkedin"),
+        primaryColor: document.getElementById("primaryColor"),
+        accentColor: document.getElementById("accentColor"),
+        logoUrl: document.getElementById("logoUrl"),
+        includeDisclaimer: document.getElementById("includeDisclaimer"),
+        includeDomainWarning: document.getElementById("includeDomainWarning"),
+      };
+
+      // Function to generate signature HTML
+      function generateSignature() {
+        const values = {};
+        Object.keys(inputs).forEach((key) => {
+          if (inputs[key].type === "checkbox") {
+            values[key] = inputs[key].checked;
+          } else {
+            values[key] = inputs[key].value;
+          }
+        });
+
+        // Logo content
+        const logoContent = values.logoUrl
+          ? `<img src="${values.logoUrl}" alt="UNILINE Logo" style="max-width: 250px; max-height: 187px; display: block;" />`
+          : `<div style="text-align: left;">
+               <div style="font-size: 32px; font-weight: bold; color: #333; margin-bottom: 5px; font-family: Arial, sans-serif;">UNILINE</div>
+               <div style="height: 3px; background-color: ${values.accentColor}; width: 150px; margin-bottom: 10px;"></div>
+               <div style="font-size: 16px; color: #333; font-style: italic; font-family: Arial, sans-serif;">INC.</div>
+               <div style="margin-top: 20px; width: 150px; height: 100px; background-color: #f5f5f5; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; color: #666; font-size: 11px; text-align: center; border-radius: 4px;">
+                 Logo<br />Placeholder
+               </div>
+             </div>`;
+
+        // Social media icons
+        const socialIcons = [];
+        if (values.website) {
+          socialIcons.push(`<a href="${values.website}" style="text-decoration: none; margin-right: 10px;">
+            <span style="display: inline-block; width: 30px; height: 30px; background-color: ${values.primaryColor}; border-radius: 50%; text-align: center; line-height: 30px; color: white; font-size: 14px;">🌐</span>
+          </a>`);
+        }
+        if (values.facebook) {
+          socialIcons.push(`<a href="${values.facebook}" style="text-decoration: none; margin-right: 10px;">
+            <span style="display: inline-block; width: 30px; height: 30px; background-color: #3b5998; border-radius: 50%; text-align: center; line-height: 30px; color: white; font-size: 14px;">f</span>
+          </a>`);
+        }
+        if (values.instagram) {
+          socialIcons.push(`<a href="${values.instagram}" style="text-decoration: none; margin-right: 10px;">
+            <span style="display: inline-block; width: 30px; height: 30px; background-color: #e4405f; border-radius: 50%; text-align: center; line-height: 30px; color: white; font-size: 14px;">📷</span>
+          </a>`);
+        }
+        if (values.linkedin) {
+          socialIcons.push(`<a href="${values.linkedin}" style="text-decoration: none; margin-right: 10px;">
+            <span style="display: inline-block; width: 30px; height: 30px; background-color: #0077b5; border-radius: 50%; text-align: center; line-height: 30px; color: white; font-size: 14px;">in</span>
+          </a>`);
+        }
+
+        // Domain warning
+        const domainWarning = values.includeDomainWarning
+          ? `
+          <div style="margin-top: 15px; padding: 10px; background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px;">
+            <div style="font-size: 11px; color: #856404;">
+              <strong>Please note:</strong> Due to increasing identity theft incidents, only trust communications from the domain <strong>@unilineinc.net</strong>. Please make a call for dispatch verification.
+            </div>
+          </div>`
+          : "";
+
+        // Disclaimer
+        const disclaimer = values.includeDisclaimer
+          ? `
+          <div style="margin-top: 15px; font-size: 10px; color: #666; line-height: 1.3;">
+            The information contained in this email is confidential and intended only for the exclusive use of the addressee. Copying, distributing or any other use of this communication by any person or entity other than the addressee is prohibited. If you have received this communication by mistake, notify the sender immediately and destroy all forms of this communication (electronic or paper).
+          </div>`
+          : "";
+
+        const addressIcons = {
+          phone: "📞",
+          fax: "📠",
+          location: "📍",
+        };
+
+        return `
+<table cellpadding="0" cellspacing="0" border="0" style="font-family: Arial, sans-serif; font-size: 13px; line-height: 1.4; margin: 0; padding: 0; max-width: 650px;">
+  <tr>
+    <td style="padding-right: 10px; vertical-align: top; width: 150px;">
+      ${logoContent}
+    </td>
+    <td style="vertical-align: top; padding-left: 10px; position: relative;">
+      <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background-color: #ddd;"></div>
+      <!-- Contact Information -->
+      <div style="margin-bottom: 15px;">
+        <div style="font-size: 18px; font-weight: bold; color: ${
+          values.primaryColor
+        }; margin-bottom: 5px;">${values.fullName}</div>
+        <div style="font-size: 16px; font-weight: bold; color: ${
+          values.primaryColor
+        }; margin-bottom: 3px;">${values.jobTitle}</div>
+        <div style="font-size: 16px; font-weight: bold; color: ${
+          values.primaryColor
+        }; margin-bottom: 15px;">${values.department}</div>
+      </div>
+
+      <!-- Contact Details -->
+      <div style="margin-bottom: 15px;">
+        ${
+          values.phone
+            ? `<div style="margin-bottom: 5px;"><span style="color: #333;">${addressIcons.phone}</span> <strong>Tel:</strong> ${values.phone}</div>`
+            : ""
+        }
+        ${
+          values.fax
+            ? `<div style="margin-bottom: 10px;"><span style="color: #333;">${addressIcons.fax}</span> <strong>Fax:</strong> ${values.fax}</div>`
+            : ""
+        }
+      </div>
+
+      <!-- Addresses -->
+      <div style="margin-bottom: 15px;">
+        ${
+          values.address1
+            ? `<div style="margin-bottom: 5px;"><span style="color: #333;">${addressIcons.location}</span> ${values.address1}</div>`
+            : ""
+        }
+        ${
+          values.address2
+            ? `<div style="margin-bottom: 10px;"><span style="color: #333;">${addressIcons.location}</span> ${values.address2}</div>`
+            : ""
+        }
+      </div>
+
+      <!-- Licensing Information -->
+      ${
+        values.mcNumber || values.dotNumber
+          ? `<div style="margin-bottom: 15px; font-weight: bold; color: ${
+              values.primaryColor
+            };">
+        ${values.mcNumber ? values.mcNumber : ""}${
+              values.mcNumber && values.dotNumber ? " | " : ""
+            }${values.dotNumber ? values.dotNumber : ""}
+      </div>`
+          : ""
+      }
+
+      <!-- Social Media Icons -->
+      ${
+        socialIcons.length > 0
+          ? `<div style="margin-bottom: 15px;">${socialIcons.join("")}</div>`
+          : ""
+      }
+    </td>
+  </tr>
+  
+  <!-- Full Width Footer Row -->
+  <tr>
+    <td colspan="2" style="padding-top: 20px; border-top: 1px solid #ddd;">
+      <!-- Footer Message -->
+      <div style="margin-bottom: 15px;">
+        <div style="font-size: 12px; color: #666; white-space: nowrap;">
+          <strong>FOR ALL REQUESTS, PLEASE SEND AN EMAIL TO:</strong> <a href="mailto:${
+            values.email
+          }" style="color: ${
+          values.primaryColor
+        }; text-decoration: underline;">${values.email}</a>
+        </div>
+      </div>
+
+      ${domainWarning}
+      ${disclaimer}
+    </td>
+  </tr>
+</table>`;
+      }
+
+      // Function to update logo preview
+      function updateLogoPreview() {
+        const logoUrl = inputs.logoUrl.value;
+        const logoPreview = document.getElementById("logoPreview");
+
+        if (logoUrl) {
+          logoPreview.innerHTML = `
+            <img src="${logoUrl}" alt="UNILINE Logo" style="max-width: 100%; max-height: 100%; border-radius: 4px;" 
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <div style="display: none; color: #999; font-size: 11px; text-align: center; line-height: 1.3;">
+              Failed to load image<br>
+              <small>Please check the URL</small>
+            </div>`;
+        } else {
+          logoPreview.innerHTML = `
+            <div style="text-align: center; line-height: 1.3;">
+              <strong>UNILINE</strong><br />
+              <div style="width: 60px; height: 2px; background: #d32f2f; margin: 5px auto;"></div>
+              <em>INC.</em><br />
+              <small style="color: #999; margin-top: 10px; display: block;">+ Logo</small>
+            </div>`;
+        }
+      }
+
+      // Function to update preview
+      function updatePreview() {
+        updateLogoPreview();
+        const signatureHTML = generateSignature();
+        document.getElementById("signaturePreview").innerHTML = signatureHTML;
+      }
+
+      // Function to copy signature to clipboard
+      async function copySignature() {
+        const signatureHTML = generateSignature();
+        try {
+          await navigator.clipboard.writeText(signatureHTML);
+          showSuccessMessage(
+            "Signature HTML copied to clipboard successfully!"
+          );
+        } catch (err) {
+          // Fallback for older browsers
+          const textArea = document.createElement("textarea");
+          textArea.value = signatureHTML;
+          textArea.style.position = "fixed";
+          textArea.style.opacity = "0";
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textArea);
+          showSuccessMessage(
+            "Signature HTML copied to clipboard successfully!"
+          );
+        }
+      }
+
+      // Function to download signature as HTML file
+      function downloadSignature() {
+        const signatureHTML = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNILINE Email Signature</title>
+</head>
+<body style="margin: 0; padding: 20px; font-family: Arial, sans-serif;">
+${generateSignature()}
+</body>
+</html>`;
+
+        const blob = new Blob([signatureHTML], { type: "text/html" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `uniline-signature-${inputs.fullName.value
+          .replace(/\s+/g, "-")
+          .toLowerCase()}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        showSuccessMessage("Signature HTML file downloaded successfully!");
+      }
+
+      // Function to preview in new window
+      function previewInNewWindow() {
+        const signatureHTML = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNILINE Email Signature Preview</title>
+    <style>
+      body { margin: 0; padding: 40px; font-family: Arial, sans-serif; background: #f5f5f5; }
+      .preview-container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; }
+      .preview-title { color: #1976d2; margin-bottom: 20px; text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <h2 class="preview-title">UNILINE Email Signature Preview</h2>
+        ${generateSignature()}
+    </div>
+</body>
+</html>`;
+
+        const newWindow = window.open(
+          "",
+          "_blank",
+          "width=900,height=700,scrollbars=yes"
+        );
+        newWindow.document.write(signatureHTML);
+        newWindow.document.close();
+      }
+
+      // Function to show success message
+      function showSuccessMessage(message) {
+        const successElement = document.getElementById("successMessage");
+        successElement.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+        successElement.style.display = "block";
+        setTimeout(() => {
+          successElement.style.display = "none";
+        }, 4000);
+      }
+    </script>
+  </body>
+</html>
